@@ -1,4 +1,4 @@
-﻿namespace KanbaniteAPI.Model;
+﻿namespace KanbaniteAPI.Domain.Project;
 
 public class ProjectDto
 {

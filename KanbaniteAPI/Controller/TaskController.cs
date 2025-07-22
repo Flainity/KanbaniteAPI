@@ -1,5 +1,5 @@
 using KanbaniteAPI.Entity;
-using KanbaniteAPI.Model;
+using KanbaniteAPI.Domain.Task;
 using KanbaniteAPI.Repository;
 using Microsoft.AspNetCore.Mvc;
 

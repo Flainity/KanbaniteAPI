@@ -32,6 +32,11 @@ public class TaskRepository(KanbaniteDbContext context) : IKanbaniteRepository<T
         return context.Tasks.ToList();
     }
 
+    public async Task<IEnumerable<TaskItem>> ListAsync()
+    {
+        return await context.Tasks.ToListAsync();
+    }
+
     public TaskItem? GetById(Guid entityId)
     {
         return context.Tasks.Find(entityId);

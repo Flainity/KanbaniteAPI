@@ -30,7 +30,7 @@
       "hotReloadEnabled": true,
       "hotReloadProfile": "aspnetcore",
       "commandLineArgs": "watch run",
-      "launchBrowser": true,
+      "launchBrowser": false,
       "launchUrl": "scalar/v1",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"

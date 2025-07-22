@@ -10,10 +10,12 @@
   mariadb:
     image: mariadb:latest
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: kanbanite
+      MARIADB_USER: kanbanite_admin
+      MARIADB_PASSWORD: admin
+      MARIADB_ROOT_PASSWORD: root
+      MARIADB_DATABASE: kanbanite
     ports:
-      - "3307:3306"
+      - "3306:3306"
     networks:
       - kanbanite_network
 

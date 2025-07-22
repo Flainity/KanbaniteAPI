@@ -11,6 +11,11 @@ public class ProjectRepository(KanbaniteDbContext context) : IKanbaniteRepositor
         return context.Projects.ToList();
     }
 
+    public async Task<IEnumerable<Project>> ListAsync()
+    {
+        return await context.Projects.ToListAsync();
+    }
+
     public Project? GetById(Guid entityId)
     {
         return context.Projects.Find(entityId);

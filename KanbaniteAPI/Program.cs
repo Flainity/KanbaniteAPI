@@ -1,3 +1,4 @@
+using FastEndpoints;
 using KanbaniteAPI.Data;
 using KanbaniteAPI.Extension;
 using KanbaniteAPI.Repository;
@@ -6,8 +7,13 @@ using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+builder.Services.AddKanbaniteServices();
+
+builder.Services.AddAuthorization();
+
+builder.Services.AddFastEndpoints();
 builder.Services.AddOpenApi();
+builder.Services.AddCors();
 
 builder.Services.AddDbContext<KanbaniteDbContext>(options =>
 {
@@ -15,8 +21,6 @@ builder.Services.AddDbContext<KanbaniteDbContext>(options =>
 
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
 });
-
-builder.Services.AddKanbaniteServices();
 
 var app = builder.Build();
 
@@ -32,6 +36,6 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
-app.MapControllers();
+app.UseFastEndpoints();
 
 app.Run();

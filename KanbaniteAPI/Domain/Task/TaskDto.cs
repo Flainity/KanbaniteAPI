@@ -1,4 +1,4 @@
-﻿namespace KanbaniteAPI.Model;
+﻿namespace KanbaniteAPI.Domain.Task;
 
 public class TaskDto
 {
