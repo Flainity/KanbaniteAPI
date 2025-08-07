@@ -1,4 +1,5 @@
 using FastEndpoints;
+using FastEndpoints.Swagger;
 using KanbaniteAPI.Data;
 using KanbaniteAPI.Extension;
 using KanbaniteAPI.Repository;
@@ -9,9 +10,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddKanbaniteServices();
 
+builder.Services.AddControllers();
+
 builder.Services.AddAuthorization();
 
-builder.Services.AddFastEndpoints();
+//builder.Services.AddFastEndpoints().SwaggerDocument();
+
 builder.Services.AddOpenApi();
 builder.Services.AddCors();
 
@@ -24,9 +28,18 @@ builder.Services.AddDbContext<KanbaniteDbContext>(options =>
 
 var app = builder.Build();
 
+//app.UseFastEndpoints().UseSwaggerGen();
+app.UseOpenApi();
+
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+
+    app.UseSwaggerUI(options =>
+    {
+        options.SwaggerEndpoint("/openapi/v1.json", "OpenAPI V1");
+    });
+    
     app.MapScalarApiReference();
 }
 
@@ -36,6 +49,6 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
-app.UseFastEndpoints();
+app.MapControllers();
 
 app.Run();

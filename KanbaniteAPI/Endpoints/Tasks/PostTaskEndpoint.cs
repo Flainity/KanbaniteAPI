@@ -7,17 +7,23 @@ using KanbaniteAPI.Repository;
 
 namespace KanbaniteAPI.Endpoints.Tasks;
 
+[Tags("Tasks")]
 public class PostTaskEndpoint(IKanbaniteRepository<TaskItem> taskRepository) : Endpoint<TaskDto, KanbaniteResponse<TaskItem>>
 {
     public override void Configure()
     {
-        Post("/task/create");
+        Post("/task");
+        Description(x => x
+            .WithDescription("Creates a new task object.")
+            .WithDisplayName("New Name")
+        );
+        Tags("Tasks");
         AllowAnonymous();
     }
 
     public override async Task HandleAsync(TaskDto req, CancellationToken ct)
     {
-        var task = new Entity.TaskItem
+        var task = new TaskItem
         {
             Id = Guid.NewGuid(),
             Title = req.Title,

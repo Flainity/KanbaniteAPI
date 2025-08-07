@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 namespace KanbaniteAPI.Entity;
 
 [Table("projects")]
-public class Project
+public class Project : IEntity
 {
     [Key]
     public Guid Id { get; set; }

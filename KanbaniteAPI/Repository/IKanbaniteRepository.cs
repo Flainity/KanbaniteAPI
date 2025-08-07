@@ -1,4 +1,5 @@
 using KanbaniteAPI.Entity;
+using LanguageExt;
 
 namespace KanbaniteAPI.Repository;
 
@@ -6,14 +7,14 @@ public interface IKanbaniteRepository<T> where T : class
 {
     IEnumerable<T> List();
     Task<IEnumerable<T>> ListAsync();
-    T? GetById(Guid entityId);
+    Task<Option<T>> GetByIdAsync(Guid entityId);
 
     void Insert(T entity);
 
     void Update(T entity);
 
-    void Remove(Guid entityId);
-    void Remove(T entity);
+    Task RemoveAsync(Guid entityId);
+    Task RemoveAsync(T entity);
 
     void Save();
 }

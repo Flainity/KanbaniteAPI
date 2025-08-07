@@ -1,6 +1,11 @@
-﻿using KanbaniteAPI.Entity;
+﻿using System.Net;
+using KanbaniteAPI.Contracts;
 using KanbaniteAPI.Domain.Project;
+using KanbaniteAPI.Domain.Task;
+using KanbaniteAPI.Entity;
+using KanbaniteAPI.Extension;
 using KanbaniteAPI.Repository;
+using Mapster;
 using Microsoft.AspNetCore.Mvc;
 
 namespace KanbaniteAPI.Controller;
@@ -10,30 +15,30 @@ namespace KanbaniteAPI.Controller;
 public class ProjectController(IKanbaniteRepository<Project> projectRepository) : ControllerBase
 {
     [HttpGet]
-    public IEnumerable<Project> List()
+    [EndpointSummary("List Projects")]
+    [EndpointDescription("Lists all projects currently in the system")]
+    public async Task<KanbaniteResponse<List<ProjectDetailDto>>> List()
     {
-        return projectRepository.List();
+        var projects = await projectRepository.ListAsync();
+
+        return this.SendApiResponse(projects.Adapt<List<ProjectDetailDto>>());
     }
 
     [HttpGet("{id}")]
-    public Project? Get(Guid id)
+    [EndpointSummary("Get Project")]
+    [EndpointDescription("Get a project by its ID")]
+    public async Task<KanbaniteResponse<ProjectDetailDto>> Get([FromRoute] string id)
     {
-        return projectRepository.GetById(id);
-    }
-
-    [HttpPost]
-    public Project Post([FromBody] ProjectDto projectDto)
-    {
-        var project = new Project
+        if (!Guid.TryParse(id, out var guid))
         {
-            Id = Guid.NewGuid(),
-            Name = projectDto.Name,
-            Shorthand = projectDto.Shorthand
-        };
+            return this.SendApiError<ProjectDetailDto>(["Invalid ID format"], "The provided ID format is invalid.");
+        }
         
-        projectRepository.Insert(project);
-        projectRepository.Save();
+        var project = await projectRepository.GetByIdAsync(guid);
 
-        return project;
+        return project.IsSome
+            ? this.SendApiResponse(project.Adapt<ProjectDetailDto>())
+            : this.SendApiError<ProjectDetailDto>(["Project not found"], $"Project with id {id} does not exist.",
+                HttpStatusCode.NotFound);
     }
 }

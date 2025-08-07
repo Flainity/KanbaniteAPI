@@ -1,10 +1,10 @@
 ﻿namespace KanbaniteAPI.Domain.Task;
 
-public class TaskDto
+public class CreateTaskDto
 {
-    public Guid Id { get; init; }
     public string Title { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
-    public Guid? ProjectId { get; init; }
-    public Guid? TaskStateId { get; init; }
+
+    public Guid? ProjectId { get; set; }
+    public Guid? TaskStateId { get; set; }
 }

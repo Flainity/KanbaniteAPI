@@ -4,6 +4,7 @@ using KanbaniteAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KanbaniteAPI.Migrations
 {
     [DbContext(typeof(KanbaniteDbContext))]
-    partial class KanbaniteDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250724174138_TaskStates")]
+    partial class TaskStates
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -105,13 +108,6 @@ namespace KanbaniteAPI.Migrations
                         .HasDatabaseName("ix_tasks_states_project_id");
 
                     b.ToTable("tasks_states", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("5565ef4f-0b8f-4f0b-88f4-c5211f367543"),
-                            Name = "Open"
-                        });
                 });
 
             modelBuilder.Entity("KanbaniteAPI.Entity.TaskItem", b =>

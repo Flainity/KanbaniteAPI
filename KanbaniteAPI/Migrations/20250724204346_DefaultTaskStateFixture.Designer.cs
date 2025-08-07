@@ -4,6 +4,7 @@ using KanbaniteAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KanbaniteAPI.Migrations
 {
     [DbContext(typeof(KanbaniteDbContext))]
-    partial class KanbaniteDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250724204346_DefaultTaskStateFixture")]
+    partial class DefaultTaskStateFixture
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

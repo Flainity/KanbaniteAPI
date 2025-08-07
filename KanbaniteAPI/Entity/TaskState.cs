@@ -4,10 +4,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace KanbaniteAPI.Entity;
 
 [Table("tasks_states")]
-public class TaskState
+public class TaskState : IEntity
 {
-    [Key]
-    public Guid Id { get; set; }
+    [Key] public Guid Id { get; set; }
     public string Name { get; set; } = string.Empty;
     
     [ForeignKey("Project")]
